@@ -5,6 +5,9 @@ targetNamespace:
   create: true
   name: "steward-system"
 
+clusterTask:
+  create: true
+  
 runController:
   image:
     repository: stewardci/stewardci-run-controller
