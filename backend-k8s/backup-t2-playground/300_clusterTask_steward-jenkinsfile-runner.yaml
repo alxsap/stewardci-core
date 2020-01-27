@@ -1,0 +1,111 @@
+apiVersion: tekton.dev/v1alpha1
+kind: ClusterTask
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"tekton.dev/v1alpha1","kind":"ClusterTask","metadata":{"annotations":{},"name":"steward-jenkinsfile-runner"},"spec":{"inputs":{"params":[{"description":"Parameters to pass to the pipeline, as JSON string.\n","name":"PIPELINE_PARAMS_JSON","type":"string"},{"description":"The URL of the Git repository containing the pipeline definition.\n","name":"PIPELINE_GIT_URL","type":"string"},{"description":"The revision of the pipeline Git repository to used, e.g. 'master'.\n","name":"PIPELINE_GIT_REVISION","type":"string"},{"description":"The relative pathname of the pipeline definition file, typically 'Jenkinsfile'.\n","name":"PIPELINE_FILE","type":"string"},{"default":"","description":"The URL of the Elasticsearch index to send logs to. If null or empty, logging to Elasticsearch is disabled. # Example: http://elasticsearch-master.elasticsearch.svc.cluster.local:9200/jenkins-logs/_doc\n","name":"PIPELINE_LOG_ELASTICSEARCH_INDEX_URL","type":"string"},{"default":"","description":"The name of the secret of type basic-auth to use to authenticate to Elasticsearch. If null or empty, no authentication takes place.\n","name":"PIPELINE_LOG_ELASTICSEARCH_AUTH_SECRET","type":"string"},{"default":"","description":"The name of the secret providing the trusted certificates bundle used for TLS server verification when connecting to Elasticsearch. If null or empty, the default trusted certificates are used.\n","name":"PIPELINE_LOG_ELASTICSEARCH_TRUSTEDCERTS_SECRET","type":"string"},{"default":"","description":"The value for the 'runId' field of log events, as JSON string. Must be specified if logging to Elasticsearch is enabled.\n","name":"PIPELINE_LOG_ELASTICSEARCH_RUN_ID_JSON","type":"string"},{"description":"The namespace of this pipeline run.\n","name":"RUN_NAMESPACE","type":"string"},{"default":"","description":"The name of the job this pipeline run belongs to. It is used as the name of the Jenkins job and therefore must be a valid Jenkins job name. If null or empty, `job` will be used.\n","name":"JOB_NAME","type":"string"},{"default":"1","description":"The sequence number of the pipeline run, which translates into the build number of the Jenkins job. If null or empty, `1` is used.\n","name":"RUN_NUMBER","type":"string"},{"default":"","description":"A textual description of the cause of this pipeline run. Will be set as cause of the Jenkins job. If null or empty, no cause information will be available.\n","name":"RUN_CAUSE","type":"string"}]},"steps":[{"args":[],"env":[{"name":"XDG_CONFIG_HOME","value":"/home/jenkins"},{"name":"JAVA_OPTS","value":"-Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.8"},{"name":"PIPELINE_GIT_URL","value":"$(inputs.params.PIPELINE_GIT_URL)"},{"name":"PIPELINE_GIT_REVISION","value":"$(inputs.params.PIPELINE_GIT_REVISION)"},{"name":"PIPELINE_FILE","value":"$(inputs.params.PIPELINE_FILE)"},{"name":"PIPELINE_PARAMS_JSON","value":"$(inputs.params.PIPELINE_PARAMS_JSON)"},{"name":"PIPELINE_LOG_ELASTICSEARCH_INDEX_URL","value":"$(inputs.params.PIPELINE_LOG_ELASTICSEARCH_INDEX_URL)"},{"name":"PIPELINE_LOG_ELASTICSEARCH_AUTH_SECRET","value":"$(inputs.params.PIPELINE_LOG_ELASTICSEARCH_AUTH_SECRET)"},{"name":"PIPELINE_LOG_ELASTICSEARCH_TRUSTEDCERTS_SECRET","value":"$(inputs.params.PIPELINE_LOG_ELASTICSEARCH_TRUSTEDCERTS_SECRET)"},{"name":"PIPELINE_LOG_ELASTICSEARCH_RUN_ID_JSON","value":"$(inputs.params.PIPELINE_LOG_ELASTICSEARCH_RUN_ID_JSON)"},{"name":"RUN_NAMESPACE","value":"$(inputs.params.RUN_NAMESPACE)"},{"name":"JOB_NAME","value":"$(inputs.params.JOB_NAME)"},{"name":"RUN_NUMBER","value":"$(inputs.params.RUN_NUMBER)"},{"name":"RUN_CAUSE","value":"$(inputs.params.RUN_CAUSE)"}],"image":"eu.gcr.io/sap-sapcp-engsrv-cicd-test/stewardci-jenkinsfile-runner-internal:200117_30f7020","imagePullPolicy":"Always","name":"jenkinsfile-runner","resources":{"limits":{"cpu":3,"memory":"4Gi"},"requests":{"cpu":"0.5","memory":"1Gi"}}}]}}
+  creationTimestamp: "2020-01-15T14:30:28Z"
+  generation: 6
+  name: steward-jenkinsfile-runner
+  resourceVersion: "1721630"
+  selfLink: /apis/tekton.dev/v1alpha1/clustertasks/steward-jenkinsfile-runner
+  uid: 93cec922-37a3-11ea-8108-4201ac100004
+spec:
+  inputs:
+    params:
+    - description: |
+        Parameters to pass to the pipeline, as JSON string.
+      name: PIPELINE_PARAMS_JSON
+      type: string
+    - description: |
+        The URL of the Git repository containing the pipeline definition.
+      name: PIPELINE_GIT_URL
+      type: string
+    - description: |
+        The revision of the pipeline Git repository to used, e.g. 'master'.
+      name: PIPELINE_GIT_REVISION
+      type: string
+    - description: |
+        The relative pathname of the pipeline definition file, typically 'Jenkinsfile'.
+      name: PIPELINE_FILE
+      type: string
+    - default: http://steward-elasticsearch-proxy.steward-elasticsearch-proxy.svc.cluster.local/t2-playground-cfeu10/_doc
+      description: |
+        The URL of the Elasticsearch index to send logs to. If null or empty, logging to Elasticsearch is disabled. # Example: http://elasticsearch-master.elasticsearch.svc.cluster.local:9200/jenkins-logs/_doc
+      name: PIPELINE_LOG_ELASTICSEARCH_INDEX_URL
+      type: string
+    - default: ""
+      description: |
+        The name of the secret of type basic-auth to use to authenticate to Elasticsearch. If null or empty, no authentication takes place.
+      name: PIPELINE_LOG_ELASTICSEARCH_AUTH_SECRET
+      type: string
+    - default: ""
+      description: |
+        The name of the secret providing the trusted certificates bundle used for TLS server verification when connecting to Elasticsearch. If null or empty, the default trusted certificates are used.
+      name: PIPELINE_LOG_ELASTICSEARCH_TRUSTEDCERTS_SECRET
+      type: string
+    - default: ""
+      description: |
+        The value for the 'runId' field of log events, as JSON string. Must be specified if logging to Elasticsearch is enabled.
+      name: PIPELINE_LOG_ELASTICSEARCH_RUN_ID_JSON
+      type: string
+    - description: |
+        The namespace of this pipeline run.
+      name: RUN_NAMESPACE
+      type: string
+    - default: ""
+      description: |
+        The name of the job this pipeline run belongs to. It is used as the name of the Jenkins job and therefore must be a valid Jenkins job name. If null or empty, `job` will be used.
+      name: JOB_NAME
+      type: string
+    - default: "1"
+      description: |
+        The sequence number of the pipeline run, which translates into the build number of the Jenkins job. If null or empty, `1` is used.
+      name: RUN_NUMBER
+      type: string
+    - default: ""
+      description: |
+        A textual description of the cause of this pipeline run. Will be set as cause of the Jenkins job. If null or empty, no cause information will be available.
+      name: RUN_CAUSE
+      type: string
+  steps:
+  - env:
+    - name: XDG_CONFIG_HOME
+      value: /home/jenkins
+    - name: JAVA_OPTS
+      value: -Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50
+        -Dhudson.slaves.NodeProvisioner.MARGIN0=0.8
+    - name: PIPELINE_GIT_URL
+      value: $(inputs.params.PIPELINE_GIT_URL)
+    - name: PIPELINE_GIT_REVISION
+      value: $(inputs.params.PIPELINE_GIT_REVISION)
+    - name: PIPELINE_FILE
+      value: $(inputs.params.PIPELINE_FILE)
+    - name: PIPELINE_PARAMS_JSON
+      value: $(inputs.params.PIPELINE_PARAMS_JSON)
+    - name: PIPELINE_LOG_ELASTICSEARCH_INDEX_URL
+      value: $(inputs.params.PIPELINE_LOG_ELASTICSEARCH_INDEX_URL)
+    - name: PIPELINE_LOG_ELASTICSEARCH_AUTH_SECRET
+      value: $(inputs.params.PIPELINE_LOG_ELASTICSEARCH_AUTH_SECRET)
+    - name: PIPELINE_LOG_ELASTICSEARCH_TRUSTEDCERTS_SECRET
+      value: $(inputs.params.PIPELINE_LOG_ELASTICSEARCH_TRUSTEDCERTS_SECRET)
+    - name: PIPELINE_LOG_ELASTICSEARCH_RUN_ID_JSON
+      value: $(inputs.params.PIPELINE_LOG_ELASTICSEARCH_RUN_ID_JSON)
+    - name: RUN_NAMESPACE
+      value: $(inputs.params.RUN_NAMESPACE)
+    - name: JOB_NAME
+      value: $(inputs.params.JOB_NAME)
+    - name: RUN_NUMBER
+      value: $(inputs.params.RUN_NUMBER)
+    - name: RUN_CAUSE
+      value: $(inputs.params.RUN_CAUSE)
+    image: eu.gcr.io/sap-sapcp-engsrv-cicd-test/stewardci-jenkinsfile-runner-internal:200117_30f7020
+    imagePullPolicy: Always
+    name: jenkinsfile-runner
+    resources:
+      limits:
+        cpu: "3"
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi

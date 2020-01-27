@@ -1,0 +1,58 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"rbac.authorization.k8s.io/v1beta1","kind":"ClusterRole","metadata":{"annotations":{},"name":"steward-run"},"rules":[{"apiGroups":[""],"resources":["pods"],"verbs":["create","delete","get","list","patch","update","watch"]},{"apiGroups":[""],"resources":["pods/exec"],"verbs":["create","delete","get","list","patch","update","watch"]},{"apiGroups":[""],"resources":["pods/log"],"verbs":["get","list","watch"]},{"apiGroups":[""],"resources":["secrets"],"verbs":["get","list","watch"]},{"apiGroups":[""],"resources":["clusterbuildtemplate"],"verbs":["get"]}]}
+  creationTimestamp: "2020-01-15T14:30:27Z"
+  name: steward-run
+  resourceVersion: "6650"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterroles/steward-run
+  uid: 9311b227-37a3-11ea-8108-4201ac100004
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods/log
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - clusterbuildtemplate
+  verbs:
+  - get

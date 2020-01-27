@@ -1,0 +1,137 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apiextensions.k8s.io/v1beta1","kind":"CustomResourceDefinition","metadata":{"annotations":{},"name":"pipelineruns.steward.sap.com"},"spec":{"additionalPrinterColumns":[{"JSONPath":".metadata.creationTimestamp","name":"Started","type":"date"},{"JSONPath":".status.container.terminated.finishedAt","name":"Finished","priority":1,"type":"date"},{"JSONPath":".status.state","description":"The current state of the pipeline run","name":"Status","priority":0,"type":"string"},{"JSONPath":".status.result","description":"The result of the pipeline run","name":"Result","priority":1,"type":"string"},{"JSONPath":".status.messageShort","description":"The message of the pipeline run","name":"Message","priority":2,"type":"string"}],"group":"steward.sap.com","names":{"kind":"PipelineRun","plural":"pipelineruns","singular":"pipelinerun"},"scope":"Namespaced","subresources":{"status":{}},"validation":{"openAPIV3Schema":{"properties":{"spec":{"properties":{"args":{"additionalProperties":{"type":"string"},"type":"object"},"imagePullSecrets":{"items":{"pattern":"^[^\\s]{1,}.*$","type":"string"},"type":"array"},"intent":{"pattern":"^(|run|abort)$","type":"string"},"jenkinsFile":{"properties":{"relativePath":{"pattern":"^[^\\s]{1,}.*$","type":"string"},"repoAuthSecret":{"type":"string"},"repoUrl":{"pattern":"^[^\\s]{1,}.*$","type":"string"},"revision":{"pattern":"^[^\\s]{1,}.*$","type":"string"}},"required":["repoUrl","revision","relativePath"],"type":"object"},"logging":{"properties":{"elasticsearch":{"properties":{"runID":{"type":"object"}},"required":["runID"],"type":"object"}},"type":"object"},"runDetails":{"properties":{"cause":{"type":"string"},"jobName":{"type":"string"},"sequenceNumber":{"maximum":2147483647,"minimum":0,"type":"integer"}},"type":"object"},"secrets":{"items":{"pattern":"^[^\\s]{1,}.*$","type":"string"},"type":"array"}},"required":["jenkinsFile"],"type":"object"}},"required":["spec"],"type":"object"}},"version":"v1alpha1"}}
+  creationTimestamp: "2020-01-15T14:30:27Z"
+  generation: 1
+  name: pipelineruns.steward.sap.com
+  resourceVersion: "6644"
+  selfLink: /apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/pipelineruns.steward.sap.com
+  uid: 92e343e9-37a3-11ea-8108-4201ac100004
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .metadata.creationTimestamp
+    name: Started
+    type: date
+  - JSONPath: .status.container.terminated.finishedAt
+    name: Finished
+    priority: 1
+    type: date
+  - JSONPath: .status.state
+    description: The current state of the pipeline run
+    name: Status
+    type: string
+  - JSONPath: .status.result
+    description: The result of the pipeline run
+    name: Result
+    priority: 1
+    type: string
+  - JSONPath: .status.messageShort
+    description: The message of the pipeline run
+    name: Message
+    priority: 2
+    type: string
+  conversion:
+    strategy: None
+  group: steward.sap.com
+  names:
+    kind: PipelineRun
+    listKind: PipelineRunList
+    plural: pipelineruns
+    singular: pipelinerun
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        spec:
+          properties:
+            args:
+              additionalProperties:
+                type: string
+              type: object
+            imagePullSecrets:
+              items:
+                pattern: ^[^\s]{1,}.*$
+                type: string
+              type: array
+            intent:
+              pattern: ^(|run|abort)$
+              type: string
+            jenkinsFile:
+              properties:
+                relativePath:
+                  pattern: ^[^\s]{1,}.*$
+                  type: string
+                repoAuthSecret:
+                  type: string
+                repoUrl:
+                  pattern: ^[^\s]{1,}.*$
+                  type: string
+                revision:
+                  pattern: ^[^\s]{1,}.*$
+                  type: string
+              required:
+              - repoUrl
+              - revision
+              - relativePath
+              type: object
+            logging:
+              properties:
+                elasticsearch:
+                  properties:
+                    runID:
+                      type: object
+                  required:
+                  - runID
+                  type: object
+              type: object
+            runDetails:
+              properties:
+                cause:
+                  type: string
+                jobName:
+                  type: string
+                sequenceNumber:
+                  maximum: 2147483647
+                  minimum: 0
+                  type: integer
+              type: object
+            secrets:
+              items:
+                pattern: ^[^\s]{1,}.*$
+                type: string
+              type: array
+          required:
+          - jenkinsFile
+          type: object
+      required:
+      - spec
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: PipelineRun
+    listKind: PipelineRunList
+    plural: pipelineruns
+    singular: pipelinerun
+  conditions:
+  - lastTransitionTime: "2020-01-15T14:30:27Z"
+    message: no conflicts found
+    reason: NoConflicts
+    status: "True"
+    type: NamesAccepted
+  - lastTransitionTime: null
+    message: the initial names have been accepted
+    reason: InitialNamesAccepted
+    status: "True"
+    type: Established
+  storedVersions:
+  - v1alpha1

@@ -1,0 +1,36 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"rbac.authorization.k8s.io/v1beta1","kind":"ClusterRole","metadata":{"annotations":{},"name":"steward-tenant"},"rules":[{"apiGroups":["steward.sap.com"],"resources":["pipelineruns"],"verbs":["create","delete","get","list","patch","update","watch"]},{"apiGroups":[""],"resources":["secrets"],"verbs":["create","delete","get","list","patch","update","watch"]}]}
+  creationTimestamp: "2020-01-15T14:30:27Z"
+  name: steward-tenant
+  resourceVersion: "6651"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterroles/steward-tenant
+  uid: 932c5202-37a3-11ea-8108-4201ac100004
+rules:
+- apiGroups:
+  - steward.sap.com
+  resources:
+  - pipelineruns
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
