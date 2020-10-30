@@ -30,6 +30,7 @@
         Old configuration will not work anymore! See upgrade notes.
     upgradeNotes: >-
       **Helm Chart Configuration changed:**
+
       - `pipelineRuns.jenkinsfileRunner.image.repository` is outdated: use `pipelineRuns.jenkinsfileRunner.image` instead
       - `pipelineRuns.jenkinsfileRunner.image.tag` is outdated: use `pipelineRuns.jenkinsfileRunner.image` instead
       - `pipelineRuns.jenkinsfileRunner.image.pullPolicy` is outdated: use `pipelineRuns.jenkinsfileRunner.imagePullPolicy` instead
