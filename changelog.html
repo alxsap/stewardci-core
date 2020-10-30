@@ -1,0 +1,102 @@
+<html>
+    <head>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.0/js-yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+        <script>
+
+            const repoUrl = "https://github.com/alxsap/stewardci-core"
+            //The following URL has to point the the RAW (!) version of the changelog.yaml in the master branch
+            const changelogYamlUrl = "https://raw.githubusercontent.com/alxsap/stewardci-core/changelogTest/changelog.yaml"
+            var changelog;
+
+            $(function(){
+                xmlhttp=new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function()
+                {
+                    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        changelog = jsyaml.load(xmlhttp.responseText);
+                        renderChangelog(changelog);
+                    }
+                }
+                xmlhttp.open("GET", changelogYamlUrl, true);
+                xmlhttp.send();
+            });
+
+            function renderChangelog(changelog) {
+                for(var i = 0; i < changelog.length; i++) {
+                    var release = changelog[i];
+                    $("#content").append(renderRelease(release))
+                }
+            }
+
+            function renderRelease(release) {
+                var div = document.createElement("div");
+                if(release.version == "NEXT") {
+                    div.setAttribute("class", "next")
+                     $(div).append("<h3>"+release.version+"</h3>");
+                     $(div).append("<p>Release Date: unknown </p>");
+                } else {
+                    div.setAttribute("class", "release")
+                     $(div).append("<h3>"+release.version+"</h3>");
+                     $(div).append("<p>Release Date: "+new Date(release.date).toDateString()+"</p>");
+                }
+
+                if(release.changes) {
+                    for(var i = 0; i < release.changes.length; i++) {
+                    var change = release.changes[i];
+                    $(div).append(renderChange(change))
+                }
+                }
+                return div;
+            }
+
+            function renderChange(change) {
+                var mdConverter = new showdown.Converter();
+                var div = document.createElement("div");
+                div.setAttribute("class", "change")
+                $(div).append("<h4>"+change.title+"</h4>");
+                $(div).append("<p class='categorization'>Type: "+change.type+" / Impact: "+change.impact+"</p>");
+                $(div).append(mdConverter.makeHtml("Description: "+change.description));
+                if(change.warning) $(div).append(mdConverter.makeHtml("⚠ "+change.warning));
+                if(change.upgradeNotes) $(div).append(mdConverter.makeHtml("❕ "+change.upgradeNotes));
+                if(change.deprecations) $(div).append(mdConverter.makeHtml("Deprecations: "+change.deprecations));
+                $(div).append("<p class='categorization'><a href='"+repoUrl+"/pull/"+change.pullRequestNumber+"'>#"+change.pullRequestNumber+"</a></p>");
+                return div;
+            }
+        </script>
+
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+            .next {
+                background-color: palegoldenrod;
+                padding: 5px;
+                margin-bottom: 10px;
+            }
+            .release {
+                background-color: LightBlue;
+                padding: 5px;
+                margin-bottom: 10px;
+            }
+            .change {
+                background-color: #eee;
+                padding: 5px;
+                margin-bottom: 10px;
+            }
+            .categorization {
+                font-size: 0.9em;
+                color: royalblue;
+            }
+        </style>
+
+    </head>
+    <body>
+        <h1>Changelog</h1>
+        <p><i>This generated changelog is based on the <a href="https://github.com/alxsap/stewardci-core/blob/master/changelog.yaml">changelog.yaml</a> in the repositories main branch.</i></p>
+        <div id="content"></div>
+    </body>
+</html>
