@@ -32,9 +32,11 @@
       ## Helm Chart Configuration changed:
 
       - `pipelineRuns.jenkinsfileRunner.image.repository` is outdated: use `pipelineRuns.jenkinsfileRunner.image` instead
+
       - `pipelineRuns.jenkinsfileRunner.image.tag` is outdated: use `pipelineRuns.jenkinsfileRunner.image` instead
+
       - `pipelineRuns.jenkinsfileRunner.image.pullPolicy` is outdated: use `pipelineRuns.jenkinsfileRunner.imagePullPolicy` instead
-    deprecations: 
+    deprecations:
     pullRequestNumber: 162
     jiraIssueNumber: 983
 
@@ -50,7 +52,7 @@
     warning:
     upgradeNotes:
     deprecations:
-    pullRequestNumber: 173  
+    pullRequestNumber: 173
 
   - type: internal
     impact: patch
